@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const db = require('../util/database');
+const database = require('../util/database');
 
-const Users = db.define('User',{
+const Users = database.define('Benutzer',{
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -15,10 +15,6 @@ username: {
 email:{
     type: Sequelize.STRING,
     allowNull: false,
-},
-telefonnummer: {
-  type: Sequelize.INTEGER,
-  allowNull: false
 },
  Password: {
 type: Sequelize.STRING,

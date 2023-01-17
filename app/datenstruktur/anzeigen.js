@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const db = require('../util/database');
+const database = require('../util/database');
 
-const Inserate = db.define('Objekte_HDH',{
+const Anzeige = database.define('Immobilien',{
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -56,4 +56,4 @@ const Inserate = db.define('Objekte_HDH',{
 
 
 
-module.exports = Inserate;
+module.exports = Anzeige;

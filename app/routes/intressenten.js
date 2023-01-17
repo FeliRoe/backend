@@ -1,7 +1,6 @@
 const controller = require('../execute/intressenten');
 const router = require('express').Router();
 
-
 router
   .get('/', controller.getAll)
   .get('/:inseratId', controller.getAnzahl)

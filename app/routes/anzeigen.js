@@ -1,8 +1,6 @@
 const excecute = require('../execute/anzeigen');
 const router = require('express').Router();
 
-
-
 router.get('/', excecute.alleAnzeigen)
 router.get('/houses', excecute.Haeuser);
 router.get('/construction-sites', excecute.ConstructionSites);

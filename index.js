@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const sequelize = require('./util/database');
-const User = require('./models/inserate');
+
 
 const app = express();
 
@@ -16,8 +16,7 @@ app.use((req, res, next) => {
   next();
 })
 
-//app.use('/dev', require('./routes/dev'));
-app.use('/inserate', require('./routes/inserate'));
+app.use('/anzeigen', require('./routes/anzeigen'));
 app.use('/users', require('./routes/users'));
 app.use('/intressenten', require('./routes/intressenten'));
 
