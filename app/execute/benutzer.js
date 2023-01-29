@@ -1,75 +1,97 @@
 const Benutzer = require('../datenstruktur/benutzer');
 
 
+// Statuscodes hinzufügen!!!
 
-// Alles ändern bei uns ist genau das gleiche
 
-
-exports.holAlles = async (req, res, next) => {
-  try {
-    const ALL = await Users.findAll();
-    return res.status(200).json(ALL);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
+exports.getAllUsers = (req, res, next) => {
+  Benutzer.findAll()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };
 
+exports.getUserById = (req, res, next) => {
+  const id = req.params.id;
 
-exports.holEins = async (req, res, next) => {
-  try {
-    const user = await Users.findByPk(req.params.id);
-    return res.status(200).json(user);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
+  Benutzer.findByPk(id)
+    .then((user) => {
+      if (!user) {
+        const error = new Error("Benutzer nicht gefunden.");
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };
 
-
-exports.erstellEins = async (req, res, next) => {
-  try {
-    const USER_MODEL = {
-     username: req.body.username,
-     email: req.body.mail,
-     telefonnummer: req.body.telefonnummer,
-     password: req.body.password
-
-    };
-
-    try {
-      const user = await Users.create(USER_MODEL);
-      console.log('User created');
-      return res.status(201).json("Benutzer erfolgreich angelegt")
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  } catch (error) {
-    return res.status(500).json(error);
-  }
+exports.createUser = (req, res, next) => {
+  const { username, email, password } = req.body;
+  Benutzer.create({
+    username,
+    email,
+    password,
+  })
+    .then((Benutzer) => {
+      res.status(201).json(Benutzer);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };
 
-exports.aktualisierEins = async (req, res, next) => {
-  try {
-    const USER_MODEL = {
-      Benutzername: req.body.Benutzername,
-      email: req.body.mail,
-      telefonnummer: req.body.telefonnummer,
-      Passwort: req.body.Passwort
-    };
+exports.updateUser = (req, res, next) => {
+  const id = req.params.id;
+  const { username, email, password } = req.body;
 
-    try {
-      const user = await Users.update(USER_MODEL, { where: { id: req.params.id } });
-      return res.status(200).json(user);
-    } catch (error) {}
-  } catch (error) {
-    return res.status(500).json(error);
-  }
+  Benutzer.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        const error = new Error("Benutzer nicht gefunden.");
+        error.statusCode = 404;
+        throw error;
+      }
+      return user.update({
+        username,
+        email,
+        password,
+      });
+    })
+    .then((updatedUser) => {
+      res.status(200).json(updatedUser);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };
 
-exports.loeschEins = async (req, res, next) => {
-  try {
-    const user = await Users.destroy({ where: { id: req.params.id } });
-    return res.status(200).json(user);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
+exports.deleteUser = (req, res, next) => {
+  const id = req.params.id;
+
+  Benutzer.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        const error = new Error("Benutzer nicht gefunden.");
+        error.statusCode = 404;
+        throw error;
+      }
+      return user.destroy();
+    })
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };

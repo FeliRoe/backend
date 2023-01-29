@@ -1,102 +1,112 @@
-const inserate = require('../datenstruktur/show');
+const Anzeige = require('../datenstruktur/show');
 const { Op } = require("sequelize");
 
-exports.erstelleInserat = async (req, res, next) => {
-  try {
-    const ANZEIGE = {
-      createdOn : req.body.createdOn,
-      createdBy : req.body.createdBy,
-      softwareVersion: req.body.softwarVersion,
-      customer: req.body.customer,
-      type: req.body.entry.type,
-      address: req.body.entry.address,
-      postal: req.body.entry.postal,
-      city: req.body.entry.city,
-      size: req.body.entry.size,
-      comment: req.body.entry.comment,
-      shortHand: req.body.entry.shortHand,
-    };
+// Statuscodes hinzufügen!!!
 
-    try {
-      const anzeige = await anzeigen.create(ANZEIGE);
-      console.log('Ad created');
-      return res.status(201).json(anzeige);
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
+//Aufgabe: Bei mehr als 3 Interessenten, nicht löschbar (siehe Aufgabenstellung)
 
 
-
-exports.alleInserate = async (req, res, next) => {
-  try {
+    exports.erstelleInserat = async (req, res, next) => {
     
-    const address = req.query.address;
-    const condition = address ? { address: { [Op.iLike]: `%${address}%` } } : null;
-    const alle = await anzeigen.findAll({ where: condition });
-    return res.status(200).json(alle);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
+        const ANZEIGE = {
+            createdOn : req.body.createdOn,
+            createdBy : req.body.createdBy,
+            softwareVersion: req.body.softwarVersion,
+            customer: req.body.customer,
+            type: req.body.entry.type,
+            address: req.body.entry.address,
+            postal: req.body.entry.postal,
+            city: req.body.entry.city,
+            size: req.body.entry.size,
+            comment: req.body.entry.comment,
+            shortHand: req.body.entry.shortHand,
+        };
 
-exports.haueser = async (req, res, next) => {
-  try { const anzeige = await anzeigen.findAll({ where: { type: 'house'} });
-    return res.status(200).json(anzeige);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
+        Anzeige.create(ANZEIGE)
+            .then(anzeige => {
+                console.log('Ad created');
+                res.status(201).json(anzeige);
+            })
+            .catch(error => {
+                res.status(400).json({ message: "Ungültige Eingabe", error });
+            });
+    };
+    
+    exports.alleInserate = async (req, res, next) => {
+        const address = req.query.address;
+        const condition = address ? { address: { [Op.iLike]: `%${address}%` } } : null;
+        Anzeige.findAll({ where: condition })
+            .then(alle => {
+                res.status(200).json(alle);
+            })
+            .catch(error => {
+                res.status(500).json({ message: "Internal server error", error });
+            });
+    };
+    
+    exports.haeuser = async (req, res, next) => {
+        Anzeige.findAll({ where: { type: 'house'} })
+            .then(anzeige => {
+                res.status(200).json(anzeige);
+            })
+            .catch(error => {
+                res.status(500).json({ message: "Internal server error", error });
+            });
+    };
+    
+    exports.bauplaetze = async (req, res, next) => {
+        Anzeige.findAll({ where: { type: 'construction-site'} })
+            .then(anzeige => {
+                res.status(200).json(anzeige);
+            })
+            .catch(error => {
+                res.status(500).json({ message: "Internal server error", error });
+            });
+    };
+    
+    exports.wohnungen = async (req, res, next) => {
+        Anzeige.findAll({ where: { type: 'apartment'} })
+            .then(anzeige => {
+                res.status(200).json(anzeige);
+            })
+            .catch(error => {
+                res.status(500).json({ message: "Internal server error", error });
+            });
+    };
+    
+    exports.speziellInserat = async (req, res, next) => {
+      const anzeige = await Anzeige.findByPk(req.params.id).then(
+      (anzeige) => res.status(200).json(anzeige),
+      (error) => res.status(500).json(error)
+      );
+      };
+      
+      exports.putInserat = async (req, res, next) => {
 
-exports.bauplaetze = async (req, res, next) => {
-  try { const anzeige = await anzeigen.findAll({ where: { type: 'construction-site'} });
-    return res.status(200).json(anzeige);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
-
-exports.wohnungen = async (req, res, next) => {
-  try { const anzeige = await anzeigen.findAll({ where: { type: 'apartment'} });
-    return res.status(200).json(anzeige);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
+        const ANZEIGE = {
+            createdOn : req.body.createdOn,
+            createdBy : req.body.createdBy,
+            softwareVersion: req.body.softwarVersion,
+            customer: req.body.customer,
+            type: req.body.entry.type,
+            address: req.body.entry.address,
+            postal: req.body.entry.postal,
+            city: req.body.entry.city,
+            size: req.body.entry.size,
+            comment: req.body.entry.comment,
+            shortHand: req.body.entry.shortHand,
+        };
 
 
-exports.speziellInserat = async (req, res, next) => {
-  try {
-    const anzeige = await anzeigen.findByPk(req.params.id);
-    return res.status(200).json(anzeige);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
-
-
-
-
-exports.putInserat = async (req, res, next) => { // Schwiering evtl. hier was anderes machen-> zu ähnlich
-  try { 
-    //Neu :(
-    try {
-      const anzeige = await anzeigen.update(ANZEIGE, { where: { id: req.params.id } }); // Neu
-      return res.status(200).json(anzeige);
-    } catch (error) {}
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
-
-exports.loesche = async (req, res, next) => {
-  try {
-    const anzeige = await anzeigen.destroy({ where: { id: req.params.id } });
-    return res.status(200).json(anzeige);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
+      Anzeige.update(ANZEIGE, { where: { id: req.params.id } }).then(
+      (anzeige) => res.status(200).json(anzeige),
+      (error) => res.status(500).json(error)
+      );
+      };
+      
+      exports.loeschen = async (req, res, next) => {
+      Anzeige.destroy({ where: { id: req.params.id } }).then(
+      (anzeige) => res.status(200).json(anzeige),
+      (error) => res.status(500).json(error)
+      );
+      };

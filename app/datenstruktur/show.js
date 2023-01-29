@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../util/database');
 
+
 const Anzeige = database.define('Immobilien',{
   id: {
     type: Sequelize.INTEGER,

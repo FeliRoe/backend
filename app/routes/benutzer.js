@@ -1,12 +1,13 @@
 const control = require('../execute/benutzer'); // ändern
 const router = require('express').Router();
 
-// Alles ändern
+//Passt. Nicht ändern, da in excute benutzer.js angepasst!
+
 router
-  .get('/', control.holAlles)
-  .get('/:id', control.holEins)
-  .post('/', control.erstellEins)
-  .put('/:id', control.aktualisierEins)
-  .delete('/:id', control.loeschEins);
+  .get('/', control.getAllUsers)
+  .get('/:id', control.getUserById)
+  .post('/', control.createUser)
+  .put('/:id', control.updateUser)
+  .delete('/:id', control.deleteUser);
 
 module.exports = router;

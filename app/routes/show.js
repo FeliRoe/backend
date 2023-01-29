@@ -2,7 +2,6 @@
 const excecute = require('../execute/show');
 const router = require('express').Router();
 
-// Route Naming ändern
 
 router.get('/', excecute.alleInserate)
 router.get('/houses', excecute.haeuser);

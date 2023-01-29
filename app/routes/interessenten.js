@@ -1,10 +1,9 @@
-const controller = require('../execute/interessenten'); // Ändern
+const controller = require('../execute/interessenten');
 const router = require('express').Router();
 
 router
-  .get('/', controller.holalles) // Bitte ändern
-  .get('/:inseratId', controller.getNumber) // Bitte ändern
-  .post('/', controller.intressezeigen) // Bitte ändern
-  .delete('/:id', controller.loeschEins); //Bitte ändern
+  .get('/', controller.holalles) 
+  .get('/:inseratId', controller.getNumber) 
+  .post('/', controller.intressezeigen)  
 
-module.exports = router; // passt
+module.exports = router;

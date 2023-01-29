@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 
 const sequelize = require('./util/database');
-const User = require('./datenstruktur/anzeigen');
 
 const app = express();
 
@@ -16,17 +15,16 @@ app.use((req, res, next) => {
   next();
 })
 
-//app.use('/dev', require('./routes/dev'));
-app.use('/anzeigen', require('./routes/anzeigen'));
-app.use('/users', require('./routes/users'));
-app.use('/intressenten', require('./routes/intressenten'));
+app.use('/show', require('./routes/show'));
+app.use('/benutzer', require('./routes/benutzer'));
+app.use('/interessenten', require('./routes/interessenten'));
 
 (async () =>{
   try {
     await sequelize.sync(
       {force: false}
     );
-    console.log("lets go");
+    console.log("Bereit!");
     app.listen(process.env.EXTERNAL_PORT || 6969);
   } catch (error) {
     console.error(error);
