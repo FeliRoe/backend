@@ -1,7 +1,7 @@
-const control = require('../execute/benutzer'); // ändern
+const control = require('../execute/benutzer'); 
 const router = require('express').Router();
 
-//Passt. Nicht ändern, da in excute benutzer.js angepasst!
+!
 
 router
   .get('/', control.getAllUsers)
