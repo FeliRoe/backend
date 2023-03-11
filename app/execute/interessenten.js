@@ -2,8 +2,8 @@ const Interessenten = require('../datenstruktur/interessenten');
 
 exports.holalles = async (req, res, next) => {
 Interessenten.findAll()
-.then(interessenten => {
-return res.status(200).json(interessenten);
+.then(Interessenten => {
+return res.status(200).json(Interessenten);
 })
 .catch(error => {
 return res.status(500).json(error);

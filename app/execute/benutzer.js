@@ -1,7 +1,7 @@
 const Benutzer = require('../datenstruktur/benutzer');
 
 exports.getAllUsers = (req, res, next) => {
-  Benutzer.findAll()
+  const users = Benutzer.findAll()
     .then((users) => {
       res.status(200).json(users);
     })
