@@ -1,13 +1,12 @@
-const control = require('../execute/benutzer'); 
+const excecute = require('../execute/benutzer'); 
 const router = require('express').Router();
 
-!
 
 router
-  .get('/', control.getAllUsers)
-  .get('/:id', control.getUserById)
-  .post('/', control.createUser)
-  .put('/:id', control.updateUser)
-  .delete('/:id', control.deleteUser);
+  .get('/', excecute.getAllUsers)
+  .get('/:id', excecute.getUserById)
+  .post('/', excecute.createUser)
+  .put('/:id', excecute.updateUser)
+  .delete('/:id', excecute.deleteUser);
 
 module.exports = router;

@@ -1,36 +1,38 @@
-//Aufgabe Nr.1 Punkt 10!
-const Bilder = require('../datenstruktur/bilder');
+const { Sequelize } = require('sequelize');
+const bilder = require('../datenstruktur/bilder');
 
-app.post("/bilder", upload.single("image"), (req, res) => {
-    fs.writeFile(`uploads/${req.file.originalname}`, req.file.buffer, (err) => {
-      if (err) return res.status(500).send(err);
-      return res.status(200).send("Bild erfolgreich hochgeladen");
+exports.uploadBild = async (req, res) => {
+  try {
+    const bild = await bilder.create({
+     image : req.file.buffer
     });
-  });
+    res.status(200).send("Bild erfolgreich hochgeladen");
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e.message);
+  }
+};
 
-app.delete('/bilder', async (req, res) => {
-    try {
-    const incident = await Incident.findById(req.body.id)
-    incident.image = undefined
-    incident.save()
-    res.send()
-    } catch (e) {
-    res.status(400).send(e)
+exports.deleteBild = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const bild = await bilder.findByPk(id);
+    if (bild) {
+      await bild.destroy();
+      res.status(200).send('Bild erfolgreich gelöscht');
+    } else {
+      res.status(404).send('Bild nicht gefunden');
     }
-    });
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
 
-app.get('/:id/bilder', async (req, res) => {
-        try{
-        const incident = await Incident.findById(req.params.id)
-        if (!incident || !incident.image) {
-        throw new Error()
-        }
-        //response header, use set
-        res.set('Content-Type', 'image/png')
-        res.send(incident.image)
-        } catch(e) {
-        res.status(404).send()
-        }
-        });
-
-  
+exports.getBilder = async (req, res) => {
+  try {
+    const bild = await bilder.findAll();
+    res.status(200).json(bild);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};

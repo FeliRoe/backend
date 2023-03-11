@@ -1,9 +1,9 @@
-const controller = require('../execute/interessenten');
+const execute = require('../execute/interessenten');
 const router = require('express').Router();
 
 router
-  .get('/', controller.holalles) 
-  .get('/:inseratId', controller.getNumber) 
-  .post('/', controller.intressezeigen)  
+  .get('/', execute.holalles) 
+  .get('/:inseratId', execute.getNumber) 
+  .post('/', execute.intressezeigen)  
 
 module.exports = router;

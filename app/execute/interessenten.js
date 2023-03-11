@@ -1,7 +1,5 @@
 const Interessenten = require('../datenstruktur/interessenten');
 
-// Statuscodes hinzufügen!!!
-
 exports.holalles = async (req, res, next) => {
 Interessenten.findAll()
 .then(interessenten => {

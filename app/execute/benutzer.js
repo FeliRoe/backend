@@ -1,9 +1,5 @@
 const Benutzer = require('../datenstruktur/benutzer');
 
-
-// Statuscodes hinzufügen!!!
-
-
 exports.getAllUsers = (req, res, next) => {
   Benutzer.findAll()
     .then((users) => {

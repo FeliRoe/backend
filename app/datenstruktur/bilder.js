@@ -1,19 +1,16 @@
 const database = require('../util/database');
-const multer = require('multer');
+const DataTypes = require('sequelize');
 
+const bilder = database.define('bild', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  image: {
+    type: DataTypes.BLOB,
+    allowNull: true
+  }
+});
 
-const Bilder =  multer({
-    dest: './frontend/public/images'
-    limits: {
-        fileSize: 1000000,
-        },
-        fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
-        cb(new Error('Bitte laden Sie ein Bild hoch!'))
-        }
-        cb(undefined, true)
-        }
-     });
-
-module.exports = Bilder;
-    
+module.exports = bilder;
