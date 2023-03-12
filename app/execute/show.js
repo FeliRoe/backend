@@ -1,8 +1,6 @@
 const Anzeige = require('../datenstruktur/show');
 const { Op } = require("sequelize");
 
-// Statuscodes hinzufügen!!!
-
 //Aufgabe: Bei mehr als 3 Interessenten, nicht löschbar (siehe Aufgabenstellung)
 
 
