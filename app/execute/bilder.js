@@ -1,10 +1,11 @@
 const { Sequelize } = require('sequelize');
-const bilder = require('../datenstruktur/bilder');
+const {bilder} = require('../datenstruktur/bilder');
 
 exports.uploadBild = async (req, res) => {
   try {
     const bild = await bilder.create({
-     image : req.file.buffer
+     image : req.file.buffer,
+      ObjektID: req.body.ObjektID
     });
     res.status(200).send("Bild erfolgreich hochgeladen");
   } catch (e) {

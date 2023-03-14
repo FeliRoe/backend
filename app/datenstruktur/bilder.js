@@ -1,7 +1,7 @@
 const database = require('../util/database');
 const DataTypes = require('sequelize');
 
-const bilder = database.define('bild', {
+const bilder = database.define('Photo', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -9,6 +9,10 @@ const bilder = database.define('bild', {
   },
   image: {
     type: DataTypes.BLOB,
+    allowNull: true
+  },
+  ObjektID:{
+    type: DataTypes.INTEGER,
     allowNull: true
   }
 });
